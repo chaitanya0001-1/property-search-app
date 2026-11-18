@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfolio demo: a rental property search and lead management application built with vanilla JavaScript.">
+  <title>True Housing | Property Search & Management</title>
+  <link rel="icon" type="image/png" href="assets/true-housing-mark.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="brand" href="#top" aria-label="True Housing home">
+        <img class="brand-logo" src="assets/true-housing-mark.png" alt="" width="42" height="42">
+        <span>True Housing<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#properties">Properties</a>
+        <a href="#leads">Leads</a>
+      </nav>
+      <span class="demo-pill">Student Portfolio Demo</span>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">RENTAL INVENTORY WORKSPACE</p>
+        <h1 id="page-title">Find a better place.<br><span>Manage every listing.</span></h1>
+        <p class="hero-copy">A rental listing and enquiry management demo inspired by True Housing workflows, built using HTML, CSS, and JavaScript. Search properties, manage inventory, and track enquiries — all in your browser.</p>
+        <div class="hero-actions">
+          <button id="add-property" class="btn btn-primary" type="button">+ Add property</button>
+          <a class="btn btn-secondary" href="#properties">Explore listings</a>
+        </div>
+      </div>
+      <aside class="hero-aside" aria-label="Project note">
+        <img class="aside-logo" src="assets/true-housing-mark.png" alt="" width="74" height="74">
+        <strong>Built for practical workflows</strong>
+        <p>Property inventory, favorites, and enquiries in one simple interface.</p>
+        <span class="aside-note">Sample data • No backend</span>
+      </aside>
+    </section>
+
+    <section class="stats" aria-label="Dashboard summary">
+      <div class="stat"><span class="stat-label">Total properties</span><strong id="stat-properties">0</strong><span class="stat-caption">Listings in your browser</span></div>
+      <div class="stat"><span class="stat-label">Saved properties</span><strong id="stat-favorites">0</strong><span class="stat-caption">Quick-access favorites</span></div>
+      <div class="stat"><span class="stat-label">Active enquiries</span><strong id="stat-leads">0</strong><span class="stat-caption">New and contacted</span></div>
+    </section>
+
+    <section id="properties" class="listing-section" aria-labelledby="list-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">BROWSE INVENTORY</p><h2 id="list-title">Available properties</h2></div>
+        <p id="result-count" class="result-count" aria-live="polite">Loading...</p>
+      </div>
+      <div class="toolbar" role="search" aria-label="Filter properties">
+        <label class="field field-search">Search city or property
+          <input id="search" type="search" placeholder="e.g. Mohali or 2BHK" autocomplete="off">
+        </label>
+        <label class="field">Bedrooms
+          <select id="bedrooms"><option value="">All sizes</option><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3">3 BHK</option><option value="4">4 BHK</option></select>
+        </label>
+        <label class="field">Max rent (₹)
+          <input id="max-rent" type="number" min="0" step="1" inputmode="numeric" placeholder="No limit">
+        </label>
+        <label class="field">Sort by
+          <select id="sort"><option value="featured">Featured</option><option value="rent-asc">Rent: low to high</option><option value="rent-desc">Rent: high to low</option></select>
+        </label>
+        <label class="checkbox-filter"><input id="favorites-only" type="checkbox"> Saved only</label>
+        <button id="clear-filters" class="btn btn-quiet" type="button">Clear filters</button>
+      </div>
+      <div id="property-list" class="property-grid" aria-label="Rental properties"></div>
+      <p id="empty-state" class="empty-state" hidden>No properties match these filters. Try clearing your filters or adding a listing.</p>
+    </section>
+
+    <section id="leads" class="lead-section" aria-labelledby="leads-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">FOLLOW-UP WORKFLOW</p><h2 id="leads-title">Enquiry tracker</h2></div>
+        <span class="subtle-label">Stored in this browser only</span>
+      </div>
+      <div class="lead-wrap" id="lead-list"></div>
+    </section>
+
+    <footer class="footer">
+      <span><strong>True Housing</strong> • Student portfolio project</span>
+      <span>Portfolio demo with sample listings. Do not enter real customer data.</span>
+      <button id="reset-demo" class="text-button" type="button">Reset sample data</button>
+    </footer>
+  </main>
+
+  <dialog id="property-dialog" class="modal" aria-labelledby="property-dialog-title">
+    <form id="property-form">
+      <div class="modal-header"><h2 id="property-dialog-title">Add property</h2><button type="button" class="icon-button" data-close="property-dialog" aria-label="Close form">×</button></div>
+      <p class="modal-desc">Save a demo listing to your browser's local storage.</p>
+      <div class="form-grid">
+        <label class="field full">Property title <input name="title" required maxlength="70" placeholder="e.g. 2BHK Apartment"></label>
+        <label class="field full">Location <input name="location" required maxlength="90" placeholder="e.g. Sector 80, Mohali"></label>
+        <label class="field">Rent per month (₹) <input name="rent" type="number" min="1" max="100000000" step="1" required placeholder="32000"></label>
+        <label class="field">Bedrooms <select name="bedrooms" required><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3">3 BHK</option><option value="4">4 BHK</option></select></label>
+        <label class="field full">Furnishing <select name="furnishing" required><option>Fully Furnished</option><option>Semi Furnished</option><option>Unfurnished</option></select></label>
+      </div>
+      <p id="property-error" class="form-error" role="alert"></p>
+      <div class="form-actions"><button type="button" class="btn btn-secondary" data-close="property-dialog">Cancel</button><button type="submit" class="btn btn-primary">Save property</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="lead-dialog" class="modal" aria-labelledby="lead-dialog-title">
+    <form id="lead-form">
+      <div class="modal-header"><h2 id="lead-dialog-title">New enquiry</h2><button type="button" class="icon-button" data-close="lead-dialog" aria-label="Close form">×</button></div>
+      <p id="lead-property-label" class="modal-desc"></p>
+      <div class="form-grid">
+        <label class="field full">Prospect name <input name="name" required maxlength="60" placeholder="e.g. Demo Prospect"></label>
+        <label class="field full">Follow-up note (optional) <textarea name="note" maxlength="140" rows="3" placeholder="e.g. Asked for a weekend viewing"></textarea></label>
+      </div>
+      <p class="privacy-note">Demo only: do not enter real people's personal information.</p>
+      <p id="lead-error" class="form-error" role="alert"></p>
+      <div class="form-actions"><button type="button" class="btn btn-secondary" data-close="lead-dialog">Cancel</button><button type="submit" class="btn btn-primary">Add enquiry</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="logic.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
