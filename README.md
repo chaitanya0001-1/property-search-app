@@ -1,134 +1,89 @@
 # True Housing — Property Search & Management System
 
-A **vanilla JavaScript** portfolio demonstration branded for **True Housing**, based on a rental brokerage workflow. Browse example properties, filter/sort listings, save favorites, add/edit/delete properties, and track demo enquiries and follow-up statuses. The interface is responsive and persists data using the browser's `localStorage`.
+A responsive **rental inventory and enquiry management demo** built with **HTML, CSS and vanilla JavaScript**. It models practical property-brokerage workflows: finding listings, managing property records, saving favorites and tracking enquiry follow-ups.
 
-> **Important:** This branded interface is a student portfolio demo, not the operational True Housing website. All included listings are illustrative sample data. This is a client-side demo, **not** a production real-estate platform. There is no backend, database, login, server validation, or access control. Do not store real customer information in this demo.
+**[Live demo](https://chaitanya0001-1.github.io/property-search-app/) · [Source code](https://github.com/chaitanya0001-1/property-search-app) · [Test report](TEST_REPORT.md) · [Interview guide](INTERVIEW_GUIDE.md)**
 
-## Preview
+> **Portfolio project, not a production brokerage platform.** All listings and enquiries are fictional sample data. The app runs entirely in the browser; there is no backend, authentication or shared database. Please do not enter real customer information.
 
-Desktop screenshot:
+## Screenshots
 
-![True Housing desktop preview](screenshots/desktop.png)
+![True Housing desktop dashboard](screenshots/desktop.png)
 
-Mobile screenshot: [View mobile preview](screenshots/mobile.png)
+[View mobile screenshot](screenshots/mobile.png)
 
-## Features
+## What you can do
 
-- Search by property title or location (case-insensitive)
-- Filter by bedroom count, maximum rent, and favorites
-- Sort by monthly rent (ascending/descending)
-- Save and unsave favorite properties
-- Create, edit, and delete demo property records with validation
-- Create demo enquiries, update follow-up status, and remove enquiries
-- Persist properties, favorites, and enquiries in `localStorage`
-- Display summary KPIs (property count, favorites, active enquiries)
-- Responsive layout and basic semantic accessibility
-- Automated tests of filtering, sorting, formatting, and validation
+- **Find properties:** Search by title or location, filter by bedroom count, maximum monthly rent and favorites, and sort by price.
+- **Manage inventory:** Add, edit and delete demo property listings with input validation.
+- **Track enquiries:** Create demo enquiries, update their status and remove records.
+- **Save favorites:** Mark listings for quick access.
+- **Keep local changes:** Persist properties, favorites and enquiries in browser `localStorage`.
+- **Use across screen sizes:** Responsive dashboard with summary counts and mobile-friendly layouts.
 
-## Run locally (no setup required)
+## Tech stack
 
-1. Download/extract the project ZIP.
-2. Open `index.html` in Chrome or Edge (double-click the file).
-3. Try searching for `Mohali`, selecting 2 BHK, setting max rent to `32000`, and sorting by rent.
-4. Click **+ Add property** to add a demo record.
-5. Click **+ Enquiry** on a card; then change the enquiry's follow-up status.
-6. Refresh your browser. Your changes should remain, provided browser storage is enabled.
-7. Click **Reset sample data** to restore the original three demo listings.
+| Area | Implementation |
+| --- | --- |
+| Interface | Semantic HTML5 and responsive CSS3 |
+| Application logic | Vanilla JavaScript (no UI framework) |
+| Persistence | Browser `localStorage` |
+| DOM rendering | `document.createElement` and `textContent` |
+| Automated tests | Node.js built-in test runner (`node:test`) |
+| Hosting | GitHub Pages |
 
-No npm packages, build tool, or internet access required. For more predictable browser behavior, you can also run the folder with VS Code Live Server, but that is optional.
+No production server, database, external API or JavaScript package dependency is required to run the app.
 
-## Replace your previous starter files safely
-
-If you already created `C:\Users\Chaitanya Sharma\code\property-search-app`:
-
-1. Close its open files in VS Code.
-2. Make a backup copy of that folder: `property-search-app-backup`.
-3. Extract this ZIP into a separate folder.
-4. Copy all files and the `tests` subfolder from the extracted folder into your existing `property-search-app`, replacing `index.html`, `style.css`, and `script.js` **only after confirming the backup**. You'll also be adding `logic.js`, `README.md`, `INTERVIEW_GUIDE.md`, and `tests/logic.test.js`.
-5. Open `index.html` and test the app.
-
-Do not copy the project into your unrelated `git-setup-practice` repository.
-
-## Project structure
+## Architecture
 
 ```text
-property-search-app/
-├── assets/                # True Housing logo assets and favicon
-│   ├── true-housing-mark.png
-│   └── true-housing-logo-original.png
-├── index.html             # Semantic page, controls, forms, and dialogs
-├── style.css              # Layout, responsiveness, visual design
-├── logic.js               # Pure filter/sort/validation/currency functions
-├── script.js              # State, localStorage, events, and DOM rendering
-├── tests/
-│   └── logic.test.js      # Twenty automated logic tests (Node.js)
-├── INTERVIEW_GUIDE.md     # Explanation and interview preparation
-└── README.md              # This file
+index.html               Page structure, controls and dialogs
+style.css                Responsive layout and visual design
+logic.js                 Pure filtering, sorting, formatting and validation functions
+script.js                UI state, event handlers, DOM updates and localStorage
+assets/                  Branding assets
+screenshots/             Desktop and mobile previews
+tests/logic.test.js      20 automated logic tests
+TEST_REPORT.md           Audit results and testing limitations
+INTERVIEW_GUIDE.md       Architecture walkthrough and interview preparation
 ```
 
-## How it works
+The browser loads `logic.js` before `script.js`. On startup, the app reads the stored state or loads three sample listings. UI interactions update the state, save it in `localStorage`, and rerender the relevant view. Keeping filter, sort and validation logic separate from the DOM makes those functions easier to test.
 
-1. The browser loads `index.html`, then `logic.js`, then `script.js`.
-2. `script.js` loads saved state from `localStorage` (or three sample properties).
-3. It reads search/filter UI values and calls `PropertyLogic.filterAndSort`.
-4. `renderProperties` generates property cards using `document.createElement` and `textContent`.
-5. Click handlers update the in-memory `state`, persist it, and rerender the relevant UI.
-6. A separate enquiry area shows and updates enquiries with New / Contacted / Closed statuses.
+## Run locally
 
-## Run the tests (optional)
+1. Clone the repository:
 
-If Node.js is installed, from the project folder run:
+   ```bash
+   git clone https://github.com/chaitanya0001-1/property-search-app.git
+   cd property-search-app
+   ```
 
-```powershell
+2. Open `index.html` in Chrome or Edge, or serve the folder using a local static server.
+3. Try searching, applying filters, saving a favorite, and creating a fictional listing or enquiry.
+4. Refresh in the same browser and origin to check local persistence. Use **Reset sample data** to restore the default records.
+
+`localStorage` is specific to the browser and origin; the live GitHub Pages site and a local copy will not share saved data.
+
+## Run automated tests
+
+With Node.js installed, execute:
+
+```bash
 node --test tests/logic.test.js
 ```
 
-Expected: **20 tests pass**. Node.js is used only for the test runner; the app itself uses the browser and needs no Node installation.
+The suite includes **20 unit tests** for filtering, search, sorting, favorites, input validation and currency formatting. The audited project package passed all 20; the [test report](TEST_REPORT.md) also documents 22 isolated browser interaction checks and their limitations.
 
-## Example Git workflow for the portfolio repository
+## Engineering decisions and limitations
 
-After verifying the app, create a **new public repository** named `property-search-app` (do **not** reuse `git-setup-practice`). If you choose to create an empty GitHub repo with **no README**, run these commands in the project directory:
+- **Separation of concerns:** `logic.js` provides pure functions; `script.js` handles browser state and rendering.
+- **Basic injection safety:** User-entered strings are rendered as text, not interpreted as HTML.
+- **Client-side persistence:** Fast and straightforward for a demo, but unsuitable for shared, multi-user operations.
+- **Not production-ready:** No server-side validation, authorization, database, user accounts or real-time synchronization.
 
-```powershell
-git init
-git branch -M main
-git add .
-git commit -m "Build rental property search and enquiry demo"
-git remote add origin https://github.com/chaitanya0001-1/property-search-app.git
-git push -u origin main
-```
+Potential future extension: a Java/Spring Boot API, PostgreSQL, authentication, and integration tests. These are **planned improvements, not implemented features**.
 
-**Check first:** If the directory is already a Git repository, do not blindly run `git init` or add a duplicate `origin`; instead inspect `git status` and `git remote -v` before pushing. Also review files before committing: don't publish secrets or real customer information.
+---
 
-## Limitations and production upgrades
-
-- `localStorage` is device/browser-specific and not suitable for real multi-user workflows.
-- There is no authentication, authorization, database, or server-side validation.
-- No external API is used; there are no real listings or images.
-- User-provided content is inserted using `textContent` to avoid HTML injection in this UI, but a real app would additionally validate inputs on the server.
-- Better future work: a Java/Spring Boot REST API, PostgreSQL, proper authentication, structured logging, and integration tests. These are **future upgrades**, not features of this version.
-
-See `INTERVIEW_GUIDE.md` for the honest one-minute pitch, code walkthrough, algorithm complexity, and common interview questions.
-
-## Branding
-
-The interface uses the True Housing name and navy/green brand palette. The original TH logo image is included unchanged at `assets/true-housing-logo-original.png`, while a cropped emblem from that same image is used in the navigation and hero (`assets/true-housing-mark.png`). If your current official logo differs, replace those assets rather than recreating the logo.
-
-Older browser data saved by the previous StayScope-branded version is read once and copied to the new `true-housing-portfolio-demo-v1` localStorage key, where browser storage permits.
-
-## Pre-publication checks
-
-See [TEST_REPORT.md](TEST_REPORT.md) for the automated tests, isolated browser interactions, security review, and limits of verification. Follow [GITHUB_PUBLISH_GUIDE.md](GITHUB_PUBLISH_GUIDE.md) to publish a verified version. Browser-based persistence on your own laptop should still be confirmed manually before publishing.
-
-## Local test checklist before sharing the GitHub URL
-
-- Open `index.html` on your Windows laptop and confirm the logo is visible.
-- Search `Sector 79`, clear filters, select 2 BHK, and set max rent to ₹32,000.
-- Save and unsave a property; test the Saved only checkbox.
-- Add a **fictional** property, edit it, and delete it.
-- Add a fictional enquiry; change its status, then remove it.
-- Refresh the page and confirm your demo changes persist in the **same browser and origin**.
-- Check DevTools Console for JavaScript errors.
-- Reset sample data before recording your portfolio demo.
-
-**Storage note:** Opening via `file://` and running under `http://localhost` use different storage origins. Browser policy can also restrict local-file storage, so use one consistent origin while testing. Avoid using real customer data.
+Built as a software engineering portfolio project inspired by True Housing rental workflows. [Explore the live demo](https://chaitanya0001-1.github.io/property-search-app/).
